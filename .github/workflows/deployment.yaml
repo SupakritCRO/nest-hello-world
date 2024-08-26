@@ -41,7 +41,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ vars.ECR_REGISTRY }}
-          docker build -t $ECR_REPOSITORY .
+          docker build -t ${{ vars.ECR_REPOSITORY }} .
           docker tag ${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG
           docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG
           echo "image=${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
